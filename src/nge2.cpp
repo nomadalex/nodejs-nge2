@@ -18,11 +18,15 @@
 using namespace node;
 using namespace v8;
 
-extern "C" void init (Handle<Object> target) {
-	HandleScope scope;
+extern "C" {
+	void init (Handle<Object> target) {
+		HandleScope scope;
 
-	NgeApp::Init(target);
-	InitForNgeMain(target);
-	InitForNgeInput(target);
-	InitForNgeGraphics(target);
+		NgeApp::Init(target);
+		InitForNgeMain(target);
+		InitForNgeInput(target);
+		InitForNgeGraphics(target);
+	}
+
+	NODE_MODULE(nge2, init);
 }
