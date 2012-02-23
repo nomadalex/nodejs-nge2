@@ -11,7 +11,8 @@ if(NOT NGE2_FOUND)
 
   define_find_pkg(NGE2
 	LIBRARY_HINTS nge2 libnge2
-	HEADER_HINTS libnge2.h)
+	HEADER_HINTS libnge2.h
+	HEADER_SUFFIXES nge2)
 
   findpkg_finish(NGE2)
 endif()

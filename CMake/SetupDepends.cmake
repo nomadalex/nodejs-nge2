@@ -10,6 +10,12 @@ find_package(NGE2)
 log_feature(NGE2_FOUND "libnge2" "library to wrap" "http://github.com/ifreedom/libnge2" REQUIRED)
 add_package(NGE2 NODEJS_NGE2_DEP_LIBS)
 
+if(WIN32)
+  find_package(SDL)
+  log_feature(SDL_FOUND "SDL" "Simple DirectMedia Layer" "http://www.libsdl.org/" REQUIRED)
+  add_package_include(SDL)
+endif()
+
 ################################################################################
 # Tools
 find_package(Doxygen)
