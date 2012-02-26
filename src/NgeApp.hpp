@@ -12,6 +12,7 @@
 
 #include <v8.h>
 #include <node.h>
+#include "nge_app.hpp"
 
 using namespace node;
 using namespace v8;

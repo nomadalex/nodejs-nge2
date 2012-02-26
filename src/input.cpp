@@ -8,7 +8,6 @@
  */
 #include "input.hpp"
 #include "common.h"
-#include "libnge2.h"
 
 namespace wrapper {
 

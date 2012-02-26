@@ -9,8 +9,6 @@
 
 #include "NgeApp.hpp"
 
-#include "nge_app.hpp"
-
 class NgeAppImpl : public CNgeApp {
 public:
 	virtual	int Init();

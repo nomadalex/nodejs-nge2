@@ -7,7 +7,6 @@
  *
  */
 
-#include "libnge2.h"
 #include "graphics.hpp"
 #include "common.h"
 

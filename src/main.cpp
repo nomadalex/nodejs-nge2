@@ -6,7 +6,6 @@
  *  Copyright  2012  Kun Wang <ifreedom.cn@gmail.com>
  *
  */
-#include "libnge2.h"
 #include "main.hpp"
 #include "common.h"
 

@@ -7,13 +7,13 @@
  *
  */
 
+#include <cstdio>
+#include <v8.h>
+#include <node.h>
 #include "main.hpp"
 #include "input.hpp"
 #include "graphics.hpp"
 #include "NgeApp.hpp"
-#include <cstdio>
-#include <v8.h>
-#include <node.h>
 
 using namespace node;
 using namespace v8;

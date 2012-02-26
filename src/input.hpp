@@ -12,6 +12,7 @@
 
 #include <v8.h>
 #include <node.h>
+#include "libnge2.h"
 
 using namespace node;
 using namespace v8;
