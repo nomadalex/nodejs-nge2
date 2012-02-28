@@ -21,7 +21,7 @@ include(Common)
 include(SetupDepends)
 include(Nodejs)
 
-prepare_nodejs()
+prepare_nodejs(BIN_VERSION)
 
 # Put libraries into `lib'.
 if(NOT WIN32)
