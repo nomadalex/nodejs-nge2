@@ -50,7 +50,7 @@ list(APPEND NODEJS_NGE2_SRCS
   src/input.cpp
   src/main.cpp
   )
-list(APPEND NODEJS_NGE2_LIBS ${NGE2_DEP_LIBS})
+list(APPEND NODEJS_NGE2_LIBS ${NODEJS_NGE2_DEP_LIBS})
 
 add_node_extension(nge2 ${NODEJS_NGE2_SRCS})
 target_link_libraries(nge2 ${NODEJS_NGE2_LIBS})
