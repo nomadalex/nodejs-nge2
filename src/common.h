@@ -39,6 +39,15 @@
 #define CHECK_PFUNCTION(func)					\
 	!func.IsEmpty() && func->IsFunction()
 
+#define CHECK_UINT_ARG(pos)						\
+	CHECK_ARG_TYPE(pos, Uint32)
+
+#define CHECK_INT_ARG(pos)						\
+	CHECK_ARG_TYPE(pos, Int32)
+
+#define CHECK_FLOAT_ARG(pos)					\
+	CHECK_ARG_TYPE(pos, Number)
+
 #define CHECK_ARRAY_ARG(pos)					\
 	CHECK_ARG_TYPE(pos, Array)
 
@@ -49,7 +58,7 @@
 	int var = args[pos]->Int32Value()
 
 #define GET_FLOAT_ARG(var, pos)					\
-	float var = args[pos]->ToNumber()->Value()
+	float var = (float)args[pos]->ToNumber()->Value()
 
 #define GET_ARRAY_ARG(native_type, value_expr, var, pos)			\
 	native_type * var = NULL;										\
