@@ -5,6 +5,10 @@ libnge2的nodejs绑定。
 
 **正在重度编写中**
 
+目前已经完成基本图元的绘制和（键盘、鼠标）输入部分。
+
+![例子](https://github.com/ifreedom/nodejs-nge2/raw/master/img/run.js.png)
+
 具体计划请查看 [TODO](https://github.com/ifreedom/nodejs-nge2/blob/master/TODO.md)。
 
 编译
