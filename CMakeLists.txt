@@ -52,7 +52,5 @@ list(APPEND NODEJS_NGE2_SRCS
   )
 list(APPEND NODEJS_NGE2_LIBS ${NODEJS_NGE2_DEP_LIBS})
 
-add_node_extension(nge2 ${NODEJS_NGE2_SRCS})
-target_link_libraries(nge2 ${NODEJS_NGE2_LIBS})
-
-install(TARGETS nge2 DESTINATION lib)
+add_node_extension(node_nge2 ${NODEJS_NGE2_SRCS})
+target_link_libraries(node_nge2 ${NODEJS_NGE2_LIBS})

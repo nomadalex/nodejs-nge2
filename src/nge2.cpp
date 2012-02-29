@@ -28,5 +28,5 @@ extern "C" {
 		InitForNgeGraphics(target);
 	}
 
-	NODE_MODULE(nge2, init);
+	NODE_MODULE(node_nge2, init);
 }
