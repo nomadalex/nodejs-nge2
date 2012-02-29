@@ -24,9 +24,6 @@ static Persistent<Function> step_fn;
 static Persistent<Object> app_obj;
 static NgeAppImpl impl;
 
-Persistent<Function> log_fn;
-Persistent<Object> console_obj;
-
 #define GET_AND_CALL(sym)							\
 	Local<Value> v = app_obj->Get(sym);				\
 	if (!v->IsFunction())							\
@@ -53,11 +50,6 @@ int NgeAppImpl::Fini() {
 
 void NgeApp::Init(Handle<Object> target) {
     HandleScope scope;
-
-	Local<Object> console = Context::GetCurrent()->Global()->Get(String::NewSymbol("console"))->ToObject();
-	console_obj = Persistent<Object>::New(console);
-	Local<Function> fn = Local<Function>::Cast(console->Get(String::NewSymbol("log")));
-	log_fn = Persistent<Function>::New(fn);
 
 	NODE_DEFINE_CONSTANT(target, NGE_APP_QUIT);
 	NODE_DEFINE_CONSTANT(target, NGE_APP_NORMAL);
