@@ -132,6 +132,28 @@ namespace wrapper {
 		return Undefined();
 	}
 
+	WRAPPER_FUNC(SetScreenColor) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(4);
+
+		CHECK_ARGS_TYPE(!CHECK_ARG_TYPE(0, Uint32) ||
+						!CHECK_ARG_TYPE(1, Uint32) ||
+						!CHECK_ARG_TYPE(2, Uint32) ||
+						!CHECK_ARG_TYPE(3, Uint32));
+
+		uint8 r = (uint8)args[0]->Uint32Value();
+		uint8 g = (uint8)args[1]->Uint32Value();
+		uint8 b = (uint8)args[2]->Uint32Value();
+		uint8 a = (uint8)args[3]->Uint32Value();
+
+		int color = ::SetScreenColor(r, g, b, a);
+
+		Local<Integer> _color = Integer::New(color);
+
+		return scope.Close(_color);
+	}
+
 	WRAPPER_FUNC(CreateColor) {
 		HandleScope scope;
 
@@ -252,6 +274,121 @@ namespace wrapper {
 		::FillRectGrad(pt.x, pt.y, width, height, colors, dtype);
 
 		RELEASE_ARRAY_ARG(colors);
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(PutPix) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(4);
+
+		CHECK_ARGS_TYPE(!CHECK_POINT_ARG(0) ||
+						!CHECK_COLOR_ARG(2));
+
+		GET_POINT_ARG(pt, 0);
+		GET_COLOR_ARG(2);
+
+		::PutPix(pt.x, pt.y, color, dtype);
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(DrawCircle) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(5);
+
+		CHECK_ARGS_TYPE(!CHECK_POINT_ARG(0) ||
+						!CHECK_FLOAT_ARG(2) ||
+						!CHECK_COLOR_ARG(3));
+
+		GET_POINT_ARG(pt, 0);
+		GET_FLOAT_ARG(radius, 2);
+		GET_COLOR_ARG(3);
+
+		::DrawCircle(pt.x, pt.y, radius, color, dtype);
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(FillCircle) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(5);
+
+		CHECK_ARGS_TYPE(!CHECK_POINT_ARG(0) ||
+						!CHECK_FLOAT_ARG(2) ||
+						!CHECK_COLOR_ARG(3));
+
+		GET_POINT_ARG(pt, 0);
+		GET_FLOAT_ARG(radius, 2);
+		GET_COLOR_ARG(3);
+
+		::FillCircle(pt.x, pt.y, radius, color, dtype);
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(DrawEllipse) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(6);
+
+		CHECK_ARGS_TYPE(!CHECK_POINT_ARG(0) ||
+						!CHECK_FLOAT_ARG(2) ||
+						!CHECK_FLOAT_ARG(3) ||
+						!CHECK_COLOR_ARG(4));
+
+		GET_POINT_ARG(pt, 0);
+		GET_FLOAT_ARG(xradius, 2);
+		GET_FLOAT_ARG(yradius, 3);
+		GET_COLOR_ARG(4);
+
+		::DrawEllipse(pt.x, pt.y, xradius, yradius, color, dtype);
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(FillEllipse) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(6);
+
+		CHECK_ARGS_TYPE(!CHECK_POINT_ARG(0) ||
+						!CHECK_FLOAT_ARG(2) ||
+						!CHECK_FLOAT_ARG(3) ||
+						!CHECK_COLOR_ARG(4));
+
+		GET_POINT_ARG(pt, 0);
+		GET_FLOAT_ARG(xradius, 2);
+		GET_FLOAT_ARG(yradius, 3);
+		GET_COLOR_ARG(4);
+
+		::FillEllipse(pt.x, pt.y, xradius, yradius, color, dtype);
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(DrawPolygon) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(5);
+
+		CHECK_ARGS_TYPE(!CHECK_ARRAY_ARG(0) ||
+						!CHECK_ARRAY_ARG(1) ||
+						!CHECK_ARG_TYPE(2, Int32) ||
+						!CHECK_COLOR_ARG(3));
+
+		GET_FLOAT_ARRAY_ARG(x, 0);
+		GET_FLOAT_ARRAY_ARG(y, 1);
+		GET_INT_ARG(count, 2);
+		GET_COLOR_ARG(3);
+
+		::DrawPolygon(x, y, count, color, dtype);
+
+		RELEASE_ARRAY_ARG(x);
+		RELEASE_ARRAY_ARG(y);
 
 		return Undefined();
 	}
@@ -379,11 +516,18 @@ void InitForNgeGraphics(Handle<Object> target) {
 	DEF_NGE_WRAPPER(SetClip);
 	DEF_NGE_WRAPPER(ResetClip);
 
+	DEF_NGE_WRAPPER(SetScreenColor);
 	DEF_NGE_WRAPPER(CreateColor);
 	DEF_NGE_WRAPPER(DrawLine);
 	DEF_NGE_WRAPPER(DrawRect);
 	DEF_NGE_WRAPPER(FillRect);
 	DEF_NGE_WRAPPER(FillRectGrad);
+	DEF_NGE_WRAPPER(PutPix);
+	DEF_NGE_WRAPPER(DrawCircle);
+	DEF_NGE_WRAPPER(FillCircle);
+	DEF_NGE_WRAPPER(DrawEllipse);
+	DEF_NGE_WRAPPER(FillEllipse);
+	DEF_NGE_WRAPPER(DrawPolygon);
 	DEF_NGE_WRAPPER(FillPolygon);
 	DEF_NGE_WRAPPER(FillPolygonGrad);
 }
