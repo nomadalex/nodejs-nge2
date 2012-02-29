@@ -66,9 +66,7 @@ namespace wrapper {
 
 		CHECK_ARG_LEN(1);
 
-		if (!CHECK_ARG_TYPE(0, Uint32)){
-			THROW_ARG_ERROR();
-		}
+		CHECK_ARGS_TYPE(!CHECK_ARG_TYPE(0, Uint32));
 
 		uint32_t clear = args[0]->Uint32Value();
 		::BeginScene(clear);
@@ -84,19 +82,66 @@ namespace wrapper {
 		return Undefined();
 	}
 
+	WRAPPER_FUNC(ShowFps) {
+		HandleScope scope;
+
+		::ShowFps();
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(LimitFps) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(1);
+
+		CHECK_ARGS_TYPE(!CHECK_ARG_TYPE(0, Uint32));
+
+		uint32_t fps = args[0]->Uint32Value();
+
+		::LimitFps(fps);
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(SetClip) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(4);
+
+		CHECK_ARGS_TYPE(!CHECK_ARG_TYPE(0, Int32) ||
+						!CHECK_ARG_TYPE(1, Int32) ||
+						!CHECK_ARG_TYPE(2, Int32) ||
+						!CHECK_ARG_TYPE(3, Int32));
+
+		int x = args[0]->Int32Value();
+		int y = args[1]->Int32Value();
+		int w = args[2]->Int32Value();
+		int h = args[3]->Int32Value();
+
+		::SetClip(x,y,w,h);
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(ResetClip) {
+		HandleScope scope;
+
+		::ResetClip();
+
+		return Undefined();
+	}
+
 	WRAPPER_FUNC(CreateColor) {
 		HandleScope scope;
 
 		CHECK_ARG_LEN(5);
 
-		if (!CHECK_ARG_TYPE(0, Uint32) ||
-			!CHECK_ARG_TYPE(1, Uint32) ||
-			!CHECK_ARG_TYPE(2, Uint32) ||
-			!CHECK_ARG_TYPE(3, Uint32) ||
-			!CHECK_ARG_TYPE(4, Int32))
-		{
-			THROW_ARG_ERROR();
-		}
+		CHECK_ARGS_TYPE(!CHECK_ARG_TYPE(0, Uint32) ||
+						!CHECK_ARG_TYPE(1, Uint32) ||
+						!CHECK_ARG_TYPE(2, Uint32) ||
+						!CHECK_ARG_TYPE(3, Uint32) ||
+						!CHECK_ARG_TYPE(4, Int32));
 
 		uint8 r = (uint8)args[0]->Uint32Value();
 		uint8 g = (uint8)args[1]->Uint32Value();
@@ -111,35 +156,159 @@ namespace wrapper {
 		return scope.Close(_color);
 	}
 
+#define CHECK_POINT_ARG(startpos)				\
+	(CHECK_ARG_TYPE(startpos, Number) &&		\
+	 CHECK_ARG_TYPE(startpos + 1, Number))
+
+#define CHECK_WIDTH_HEIGHT_ARG(startpos) CHECK_POINT_ARG(startpos)
+
+#define CHECK_COLOR_ARG(startpos)				\
+	(CHECK_ARG_TYPE(startpos, Int32)  &&		\
+	 CHECK_ARG_TYPE(startpos + 1, Int32))
+
+#define GET_POINT_ARG(var, startpos)						\
+	pointf var;												\
+	var.x = (float)args[startpos]->ToNumber()->Value();		\
+	var.y = (float)args[startpos + 1]->ToNumber()->Value()
+
+#define GET_WIDTH_HEIGHT_ARG(startpos)								\
+	float width = (float)args[startpos]->ToNumber()->Value();		\
+	float height = (float)args[startpos + 1]->ToNumber()->Value()
+
+#define GET_COLOR_ARG(startpos)							\
+	int32_t color = args[startpos]->Int32Value();		\
+	int32_t dtype = args[startpos + 1]->Int32Value()
+
 	WRAPPER_FUNC(DrawLine) {
 		HandleScope scope;
 
 		CHECK_ARG_LEN(6);
 
-		if (!CHECK_ARG_TYPE(0, Number) ||
-			!CHECK_ARG_TYPE(1, Number) ||
-			!CHECK_ARG_TYPE(2, Number) ||
-			!CHECK_ARG_TYPE(3, Number) ||
-			!CHECK_ARG_TYPE(4, Int32)  ||
-			!CHECK_ARG_TYPE(5, Int32))
-		{
-			THROW_ARG_ERROR();
-		}
+		CHECK_ARGS_TYPE(!CHECK_POINT_ARG(0) ||
+						!CHECK_POINT_ARG(2) ||
+						!CHECK_COLOR_ARG(4));
 
-		float x1 = (float)args[0]->ToNumber()->Value();
-		float y1 = (float)args[1]->ToNumber()->Value();
-		float x2 = (float)args[2]->ToNumber()->Value();
-		float y2 = (float)args[3]->ToNumber()->Value();
-		int32_t color = args[4]->Int32Value();
-		int32_t dtype = args[5]->Int32Value();
+		GET_POINT_ARG(p1, 0);
+		GET_POINT_ARG(p2, 2);
+		GET_COLOR_ARG(4);
 
-		::DrawLine(x1, y1, x2, y2, color, dtype);
+		::DrawLine(p1.x, p1.y, p2.x, p2.y, color, dtype);
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(DrawRect) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(6);
+
+		CHECK_ARGS_TYPE(!CHECK_POINT_ARG(0) ||
+						!CHECK_WIDTH_HEIGHT_ARG(2) ||
+						!CHECK_COLOR_ARG(4));
+
+		GET_POINT_ARG(pt, 0);
+		GET_WIDTH_HEIGHT_ARG(2);
+		GET_COLOR_ARG(4);
+
+		::DrawRect(pt.x, pt.y, width, height, color, dtype);
+
+		return Undefined();
+	}
+
+#undef FillRect
+	WRAPPER_FUNC(FillRect) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(6);
+
+		CHECK_ARGS_TYPE(!CHECK_POINT_ARG(0) ||
+						!CHECK_WIDTH_HEIGHT_ARG(2) ||
+						!CHECK_COLOR_ARG(4));
+
+		GET_POINT_ARG(pt, 0);
+		GET_WIDTH_HEIGHT_ARG(2);
+		GET_COLOR_ARG(4);
+
+		::NGE_FillRect(pt.x, pt.y, width, height, color, dtype);
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(FillRectGrad) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(6);
+
+		CHECK_ARGS_TYPE(!CHECK_POINT_ARG(0) ||
+						!CHECK_WIDTH_HEIGHT_ARG(2) ||
+						!CHECK_ARRAY_ARG(4) ||
+						!CHECK_ARG_TYPE(5, Int32));
+
+		GET_POINT_ARG(pt, 0);
+		GET_WIDTH_HEIGHT_ARG(2);
+		GET_INT_ARRAY_ARG(colors, 4);
+		GET_INT_ARG(dtype, 5);
+
+		::FillRectGrad(pt.x, pt.y, width, height, colors, dtype);
+
+		RELEASE_ARRAY_ARG(colors);
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(FillPolygon) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(5);
+
+		CHECK_ARGS_TYPE(!CHECK_ARRAY_ARG(0) ||
+						!CHECK_ARRAY_ARG(1) ||
+						!CHECK_ARG_TYPE(2, Int32) ||
+						!CHECK_ARG_TYPE(2, Int32) ||
+						!CHECK_ARG_TYPE(4, Int32));
+
+		GET_FLOAT_ARRAY_ARG(x, 0);
+		GET_FLOAT_ARRAY_ARG(y, 1);
+		GET_INT_ARG(count, 2);
+		GET_INT_ARG(color, 3);
+		GET_INT_ARG(dtype, 4);
+
+		::FillPolygon(x, y, count, color, dtype);
+
+		RELEASE_ARRAY_ARG(x);
+		RELEASE_ARRAY_ARG(y);
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(FillPolygonGrad) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(5);
+
+		CHECK_ARGS_TYPE(!CHECK_ARRAY_ARG(0) ||
+						!CHECK_ARRAY_ARG(1) ||
+						!CHECK_ARG_TYPE(2, Int32) ||
+						!CHECK_ARRAY_ARG(3) ||
+						!CHECK_ARG_TYPE(4, Int32));
+
+		GET_FLOAT_ARRAY_ARG(x, 0);
+		GET_FLOAT_ARRAY_ARG(y, 1);
+		GET_INT_ARG(count, 2);
+		GET_INT_ARRAY_ARG(colors, 3);
+		GET_INT_ARG(dtype, 4);
+
+		::FillPolygonGrad(x, y, count, colors, dtype);
+
+		RELEASE_ARRAY_ARG(x);
+		RELEASE_ARRAY_ARG(y);
+		RELEASE_ARRAY_ARG(colors);
 
 		return Undefined();
 	}
 }
 
-#define DEF_NGE_WRAPPER(sfunc)				\
+#define DEF_NGE_WRAPPER(sfunc)						\
 	NODE_SET_METHOD(target, #sfunc, wrapper::sfunc)
 
 #define DEF_NGE_COLOR_1(color)					\
@@ -204,6 +373,17 @@ void InitForNgeGraphics(Handle<Object> target) {
 	DEF_NGE_WRAPPER(BeginScene);
 	DEF_NGE_WRAPPER(EndScene);
 
+	DEF_NGE_WRAPPER(ShowFps);
+	DEF_NGE_WRAPPER(LimitFps);
+
+	DEF_NGE_WRAPPER(SetClip);
+	DEF_NGE_WRAPPER(ResetClip);
+
 	DEF_NGE_WRAPPER(CreateColor);
 	DEF_NGE_WRAPPER(DrawLine);
+	DEF_NGE_WRAPPER(DrawRect);
+	DEF_NGE_WRAPPER(FillRect);
+	DEF_NGE_WRAPPER(FillRectGrad);
+	DEF_NGE_WRAPPER(FillPolygon);
+	DEF_NGE_WRAPPER(FillPolygonGrad);
 }
