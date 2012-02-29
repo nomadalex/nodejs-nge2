@@ -14,10 +14,10 @@ namespace wrapper {
 		HandleScope scope;
 
 		CHECK_ARG_LEN(1);
-		if (!args[0]->IsInt32())
-			THROW_ARG_ERROR();
+		CHECK_ARGS_TYPE(!CHECK_ARG_TYPE(0, Int32));
 
-		int32_t flag = args[0]->Int32Value();
+		GET_INT_ARG(flag, 0);
+
 		::NGE_Init(flag);
 
 		return Undefined();
@@ -36,8 +36,11 @@ namespace wrapper {
 
 		CHECK_ARG_LEN(5);
 
-		if (!CHECK_ARG_TYPE(0, String) || !CHECK_ARG_TYPE(1, Int32) || !CHECK_ARG_TYPE(2, Int32) || !CHECK_ARG_TYPE(3, Int32) || !CHECK_ARG_TYPE(4, Int32))
-			THROW_ARG_ERROR();
+		CHECK_ARGS_TYPE(!CHECK_ARG_TYPE(0, String) ||
+						!CHECK_ARG_TYPE(1, Int32) ||
+						!CHECK_ARG_TYPE(2, Int32) ||
+						!CHECK_ARG_TYPE(3, Int32) ||
+						!CHECK_ARG_TYPE(4, Int32));
 
 		Local<String> arg1 = args[0]->ToString();
 		String::AsciiValue winname(arg1);
@@ -56,8 +59,8 @@ namespace wrapper {
 		HandleScope scope;
 
 		CHECK_ARG_LEN(2);
-		if (!CHECK_ARG_TYPE(0, Int32) || !CHECK_ARG_TYPE(1, Int32))
-			THROW_ARG_ERROR();
+		CHECK_ARGS_TYPE(!CHECK_ARG_TYPE(0, Int32) ||
+						!CHECK_ARG_TYPE(1, Int32));
 
 		int32_t width = args[0]->Int32Value();
 		int32_t height = args[1]->Int32Value();
