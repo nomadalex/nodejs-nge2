@@ -1,4 +1,4 @@
-var nge2 = require('./build/Release/nge2');
+var nge2 = require('./build/Release/node_nge2');
 
 console.log(nge2);
 
@@ -6,7 +6,10 @@ var app = new nge2.NgeApp();
 
 var quit;
 
-var red = nge2.CreateColor(255, 0, 0, 255, nge2.DISPLAY_PIXEL_FORMAT_8888);
+var dtype = nge2.DISPLAY_PIXEL_FORMAT_8888
+  , red = nge2.CreateColor(255, 0, 0, 255, dtype)
+  , yellow = nge2.CreateColor(255, 255, 0, 255, dtype)
+  , blue = nge2.CreateColor(0, 255, 255, 255, dtype);
 
 console.log("red color : " + red);
 
@@ -24,12 +27,22 @@ app.init = function(){
   return 0;
 }
 
+var polygons_x2 = [ 200.0, 300.0, 400.0 ]
+  , polygons_y2 = [ 80.0, 80.0, 160.0 ]
+  , polygons_x3 = [ 400.0, 450.0, 350.0 ]
+  , polygons_y3 = [ 160.0, 250.0, 250.0 ]
+  , polygons_colors = [ red, yellow, blue ];
+
 app.mainloop = function(){
   try {
     nge2.InputProc();
 
     nge2.BeginScene(1);
-    nge2.DrawLine(0, 0, 480, 272, red, nge2.DISPLAY_PIXEL_FORMAT_8888);
+    nge2.DrawLine(0, 0, 480, 272, red, dtype);
+    nge2.DrawRect(20,20,200,200,red,dtype);
+    nge2.FillRect(40,40,100,100,red,dtype);
+    nge2.FillPolygon(polygons_x2,polygons_y2,3,red,dtype);
+    nge2.FillPolygonGrad(polygons_x3,polygons_y3,3,polygons_colors, dtype);
     nge2.EndScene();
   }
   catch (err) {
