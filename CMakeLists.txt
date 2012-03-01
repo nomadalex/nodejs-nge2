@@ -47,6 +47,7 @@ list(APPEND NODEJS_NGE2_SRCS
   src/NgeApp.cpp
   src/nge2.cpp
   src/graphics.cpp
+  src/image.cpp
   src/input.cpp
   src/main.cpp
   )
