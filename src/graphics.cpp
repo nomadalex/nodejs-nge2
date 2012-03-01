@@ -163,29 +163,6 @@ namespace wrapper {
 		return scope.Close(_color);
 	}
 
-#define CHECK_POINT_ARG(startpos)				\
-	(CHECK_ARG_TYPE(startpos, Number) &&		\
-	 CHECK_ARG_TYPE(startpos + 1, Number))
-
-#define CHECK_WIDTH_HEIGHT_ARG(startpos) CHECK_POINT_ARG(startpos)
-
-#define CHECK_COLOR_ARG(startpos)				\
-	(CHECK_ARG_TYPE(startpos, Int32)  &&		\
-	 CHECK_ARG_TYPE(startpos + 1, Int32))
-
-#define GET_POINT_ARG(var, startpos)						\
-	pointf var;												\
-	var.x = (float)args[startpos]->ToNumber()->Value();		\
-	var.y = (float)args[startpos + 1]->ToNumber()->Value()
-
-#define GET_WIDTH_HEIGHT_ARG(startpos)								\
-	float width = (float)args[startpos]->ToNumber()->Value();		\
-	float height = (float)args[startpos + 1]->ToNumber()->Value()
-
-#define GET_COLOR_ARG(startpos)							\
-	int32_t color = args[startpos]->Int32Value();		\
-	int32_t dtype = args[startpos + 1]->Int32Value()
-
 	WRAPPER_FUNC(DrawLine) {
 		HandleScope scope;
 
