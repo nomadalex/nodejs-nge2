@@ -82,6 +82,21 @@
 	if (var != NULL)							\
 		delete[] var
 
+#define OBJECT_SET_PROP(obj, name, value)		\
+	obj->Set(String::NewSymbol(name), value)
+
+#define OBJECT_SET_STR_PROP(obj, name, value)		\
+	OBJECT_SET_PROP(obj, name, String::New(value))
+
+#define OBJECT_SET_INT_PROP(obj, name, value)		\
+	OBJECT_SET_PROP(obj, name, Integer::New(value))
+
+#define OBJECT_SET_FLOAT_PROP(obj, name, value)		\
+	OBJECT_SET_PROP(obj, name, Number::New(value))
+
+#define COPY_PROP(obj, type, st, name)				\
+	OBJECT_SET_##type##_PROP(obj, #name, st->name)
+
 #ifdef __cplusplus
 extern "C" {
 #endif
