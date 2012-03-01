@@ -17,18 +17,20 @@
 using namespace node;
 using namespace v8;
 
-class NgeApp : public ObjectWrap {
-public:
-    NgeApp() : ObjectWrap() {}
-    static void Init(Handle<Object> target);
+namespace wrapper {
+	class NgeApp : public ObjectWrap {
+	public:
+		NgeApp() : ObjectWrap() {}
+		static void Init(Handle<Object> target);
 
-protected:
-    static Handle<Value> New(const Arguments& args);
+	protected:
+		static Handle<Value> New(const Arguments& args);
 
-    static Handle<Value> StartRun(const Arguments& args);
-	static Handle<Value> GetCurrent(const Arguments& args);
+		static Handle<Value> StartRun(const Arguments& args);
+		static Handle<Value> GetCurrent(const Arguments& args);
 
-    static Handle<Value> Step(const Arguments& args);
-};
+		static Handle<Value> Step(const Arguments& args);
+	};
+}
 
 #endif /* _NGEAPP_HPP */

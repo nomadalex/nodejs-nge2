@@ -22,7 +22,7 @@ extern "C" {
 	void init (Handle<Object> target) {
 		HandleScope scope;
 
-		NgeApp::Init(target);
+		wrapper::NgeApp::Init(target);
 		InitForNgeMain(target);
 		InitForNgeInput(target);
 		InitForNgeGraphics(target);
