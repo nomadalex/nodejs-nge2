@@ -30,6 +30,10 @@ namespace wrapper {
 		static Handle<Value> GetCurrent(const Arguments& args);
 
 		static Handle<Value> Step(const Arguments& args);
+		static Handle<Value> StepEnd(const Arguments& args);
+		static Handle<Value> StartRunEnd(const Arguments& args);
+		static Handle<Value> FiniEnd(const Arguments& args);
+
 	};
 }
 

@@ -20,32 +20,42 @@ static Persistent<String> init_sym;
 static Persistent<String> mainloop_sym;
 static Persistent<String> fini_sym;
 
+static Persistent<Function> init_end_fn;
+static Persistent<Function> mainloop_end_fn;
+static Persistent<Function> fini_end_fn;
+
 static Persistent<Function> step_fn;
 static Persistent<Object> app_obj;
 static NgeAppImpl impl;
 
-#define GET_AND_CALL(sym)							\
-	Local<Value> v = app_obj->Get(sym);				\
-	if (!v->IsFunction())							\
-		return 0;									\
-													\
-	Local<Function> fn = Local<Function>::Cast(v);	\
-	Local<Value> ret = fn->Call(app_obj, 0, NULL);	\
-	if (!ret->IsInt32())							\
-		return -1;									\
-	int32_t r = ret->Int32Value();					\
-	return r
+#define GET_FUNC_BY_SYM_AND_CHECK(obj, val, sym)	\
+	Local<Value> val = obj->Get(sym);				\
+	if (!val->IsFunction())							\
+		return 0
+
+#define GET_AND_CALL(sym, end_fn)							\
+	GET_FUNC_BY_SYM_AND_CHECK(app_obj, v, sym);				\
+	Local<Function> fn = Local<Function>::Cast(v);			\
+	Local<Value> argv[1] = { Local<Value>::New(end_fn) };	\
+	fn->Call(app_obj, 1, argv);								\
+	return 0
 
 int NgeAppImpl::Init() {
-	GET_AND_CALL(init_sym);
+	HandleScope scope;
+
+	GET_AND_CALL(init_sym, init_end_fn);
 }
 
 int NgeAppImpl::Mainloop() {
-	GET_AND_CALL(mainloop_sym);
+	HandleScope scope;
+
+	GET_AND_CALL(mainloop_sym, mainloop_end_fn);
 }
 
 int NgeAppImpl::Fini() {
-	GET_AND_CALL(fini_sym);
+	HandleScope scope;
+
+	GET_AND_CALL(fini_sym, fini_end_fn);
 }
 
 namespace wrapper {
@@ -60,6 +70,10 @@ namespace wrapper {
 		fini_sym = NODE_PSYMBOL("fini");
 
 		step_fn = Persistent<Function>::New(FunctionTemplate::New(Step)->GetFunction());
+
+		init_end_fn = Persistent<Function>::New(FunctionTemplate::New(StartRunEnd)->GetFunction());
+		mainloop_end_fn = Persistent<Function>::New(FunctionTemplate::New(StepEnd)->GetFunction());
+		fini_end_fn = Persistent<Function>::New(FunctionTemplate::New(FiniEnd)->GetFunction());
 
 		Local<String> name = String::NewSymbol("NgeApp");
 
@@ -96,14 +110,28 @@ namespace wrapper {
 	fn->Call(process, 1, argv)
 
 	Handle<Value> NgeApp::Step(const Arguments& args) {
-		int ret = impl.Mainloop();
+		HandleScope scope;
 
-		if (ret == NGE_APP_QUIT) {
-			impl.Fini();
+		impl.Mainloop();
+
+		return Undefined();
+	}
+
+	Handle<Value> NgeApp::StepEnd(const Arguments& args) {
+		HandleScope scope;
+
+		if (args.Length() > 0) {
+			int ret = args[0]->Int32Value();
+			if (ret == NGE_APP_QUIT) {
+				impl.Fini();
+				return Undefined();
+			}
+			else
+				goto reg_next;
 		}
-		else {
-			REG_NEXT();
-		}
+
+	reg_next:
+		REG_NEXT();
 
 		return Undefined();
 	}
@@ -121,7 +149,21 @@ namespace wrapper {
 
 		impl.Init();
 
+		return Undefined();
+	}
+
+	Handle<Value> NgeApp::StartRunEnd(const Arguments& args) {
+		HandleScope scope;
+
 		REG_NEXT();
+
+		return Undefined();
+	}
+
+	Handle<Value> NgeApp::FiniEnd(const Arguments& args) {
+		HandleScope scope;
+
+		exit(0);
 
 		return Undefined();
 	}

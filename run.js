@@ -13,7 +13,7 @@ var dtype = nge2.DISPLAY_PIXEL_FORMAT_8888
 
 console.log("red color : " + red);
 
-app.init = function(){
+app.init = function(end){
   console.log("current app : " + nge2.NgeApp.getCurrent());
   nge2.Init(nge2.INIT_VIDEO);
   nge2.InitInput(function(key) {
@@ -26,7 +26,7 @@ app.init = function(){
                  }, 0);
   nge2.SetScreenColor(255,255,255,255);
 
-  return 0;
+  end();
 }
 
 var polygons_x1 = [ 200.0, 300.0, 400.0, 300.0 ]
@@ -37,7 +37,7 @@ var polygons_x1 = [ 200.0, 300.0, 400.0, 300.0 ]
   , polygons_y3 = [ 160.0, 250.0, 250.0 ]
   , polygons_colors = [ red, yellow, blue ];
 
-app.mainloop = function(){
+app.mainloop = function(end){
   try {
     nge2.InputProc();
     // nge2.ShowFps(); // can not print
@@ -60,13 +60,14 @@ app.mainloop = function(){
   }
 
   if (quit)
-    return nge2.NGE_APP_QUIT;
-  return nge2.NGE_APP_NORMAL;
+    end(nge2.NGE_APP_QUIT);
+  else
+    end(nge2.NGE_APP_NORMAL);
 }
 
-app.fini = function(){
+app.fini = function(end){
   nge2.Quit();
-  return 0;
+  end();
 }
 
 app.startRun();
