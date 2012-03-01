@@ -14,6 +14,7 @@
 #include "input.hpp"
 #include "graphics.hpp"
 #include "NgeApp.hpp"
+#include "image.hpp"
 
 using namespace node;
 using namespace v8;
@@ -26,6 +27,7 @@ extern "C" {
 		InitForNgeMain(target);
 		InitForNgeInput(target);
 		InitForNgeGraphics(target);
+		wrapper::Image::Init(target);
 	}
 
 	NODE_MODULE(node_nge2, init);
