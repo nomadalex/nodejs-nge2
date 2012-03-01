@@ -10,6 +10,12 @@
 #ifndef _COMMON_H
 #define _COMMON_H
 
+namespace wrapper {
+	struct Rect2 {
+		float x, y, w, h;
+	};
+}
+
 #define WRAPPER_FUNC(name)						\
 	Handle<Value> name(const Arguments& args)
 
@@ -39,6 +45,9 @@
 #define CHECK_PFUNCTION(func)					\
 	!func.IsEmpty() && func->IsFunction()
 
+#define CHECK_STR_ARG(pos)						\
+	CHECK_ARG_TYPE(pos, String)
+
 #define CHECK_UINT_ARG(pos)						\
 	CHECK_ARG_TYPE(pos, Uint32)
 
@@ -50,6 +59,25 @@
 
 #define CHECK_ARRAY_ARG(pos)					\
 	CHECK_ARG_TYPE(pos, Array)
+
+#define CHECK_POINT_ARG(startpos)				\
+	(CHECK_ARG_TYPE(startpos, Number) &&		\
+	 CHECK_ARG_TYPE(startpos + 1, Number))
+
+#define CHECK_WIDTH_HEIGHT_ARG(startpos) CHECK_POINT_ARG(startpos)
+
+#define CHECK_COLOR_ARG(startpos)				\
+	(CHECK_ARG_TYPE(startpos, Int32)  &&		\
+	 CHECK_ARG_TYPE(startpos + 1, Int32))
+
+#define CHECK_RECT_ARG(startpos)				\
+	(CHECK_POINT_ARG(startpos) && \
+	 CHECK_WIDTH_HEIGHT_ARG(startpos + 2))
+
+
+#define GET_STR_ARG(var, pos)						\
+	Local<String> var##___ = args[pos]->ToString();	\
+	String::AsciiValue var(var##___)
 
 #define GET_UINT_ARG(var, pos)					\
 	int var = args[pos]->Uint32Value()
@@ -81,6 +109,27 @@
 #define RELEASE_ARRAY_ARG(var)					\
 	if (var != NULL)							\
 		delete[] var
+
+#define GET_POINT_ARG(var, startpos)						\
+	pointf var;												\
+	var.x = (float)args[startpos]->ToNumber()->Value();		\
+	var.y = (float)args[startpos + 1]->ToNumber()->Value()
+
+#define GET_WIDTH_HEIGHT_ARG(startpos)								\
+	float width = (float)args[startpos]->ToNumber()->Value();		\
+	float height = (float)args[startpos + 1]->ToNumber()->Value()
+
+#define GET_COLOR_ARG(startpos)							\
+	int32_t color = args[startpos]->Int32Value();		\
+	int32_t dtype = args[startpos + 1]->Int32Value()
+
+#define GET_RECT_ARG(var, startpos)							\
+	Rect2 var;												\
+	var.x = (float)args[startpos]->ToNumber()->Value();		\
+	var.y = (float)args[startpos + 1]->ToNumber()->Value(); \
+	var.w = (float)args[startpos + 2]->ToNumber()->Value();	\
+	var.h = (float)args[startpos + 3]->ToNumber()->Value()
+
 
 #define OBJECT_SET_PROP(obj, name, value)		\
 	obj->Set(String::NewSymbol(name), value)
