@@ -1,6 +1,12 @@
 var nge2 = require('./build/Release/node_nge2');
 
+console.log("--------------");
 console.log(nge2);
+console.log("--------------");
+console.log(nge2.NgeApp);
+console.log("--------------");
+console.log(nge2.Image);
+console.log("--------------");
 
 var app = new nge2.NgeApp();
 
@@ -57,6 +63,8 @@ app.mainloop = function(end){
   }
   catch (err) {
     console.log("err : " + err);
+    end(nge2.NGE_APP_QUIT);
+    return;
   }
 
   if (quit)
