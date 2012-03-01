@@ -98,7 +98,6 @@ namespace wrapper {
 
 		NgeApp* o = new NgeApp();
 		o->Wrap(args.This());
-		o->Ref();
 
 		return scope.Close(args.This());
 	}
@@ -143,6 +142,9 @@ namespace wrapper {
 			return ThrowException(Exception::TypeError(
 									  String::New("Already has a NgeApp to be run.")));
 		}
+
+		NgeApp* o = Unwrap<NgeApp>(args.This());
+		o->Ref();
 
 		app_obj = Persistent<Object>::New(args.This());
 		nge_registerApp(&impl);
