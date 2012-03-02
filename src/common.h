@@ -67,6 +67,9 @@ namespace wrapper {
 #define CHECK_OBJ_ARG(pos)						\
 	CHECK_ARG_TYPE(pos, Object)
 
+#define CHECK_WRAPPED_OBJ_ARG(type, pos)					\
+	(CHECK_ARG_TYPE(pos, Object) && type::Check(args[pos]))
+
 #define CHECK_ARRAY_ARG(pos)					\
 	CHECK_ARG_TYPE(pos, Array)
 
@@ -101,9 +104,12 @@ namespace wrapper {
 #define GET_OBJ_ARG(var, pos)					\
 	Handle<Object> var = args[pos]->ToObject()
 
+#define UNWRAP_OBJ(type, var, obj)				\
+	type* var = type::Unwrap<type>(obj)
+
 #define GET_WRAPPED_OBJ_ARG(type, var, pos)			\
 	Handle<Object> var##__ = args[pos]->ToObject();	\
-	type* var = type::Unwrap<type>(var##__)
+	UNWRAP_OBJ(type, var, var##__)
 
 #define GET_ARRAY_ARG(native_type, value_expr, var, pos)			\
 	native_type * var = NULL;										\
