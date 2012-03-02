@@ -412,7 +412,7 @@ namespace wrapper {
 
 		CHECK_ARG_LEN(9);
 
-		CHECK_ARGS_TYPE(!CHECK_OBJ_ARG(0) ||
+		CHECK_ARGS_TYPE(!CHECK_WRAPPED_OBJ_ARG(Image, 0) ||
 						!CHECK_RECT_ARG(1) ||
 						!CHECK_RECT_ARG(5));
 
