@@ -7,8 +7,9 @@
  *
  */
 
-#include "graphics.hpp"
 #include "common.h"
+#include "graphics.hpp"
+#include "image_object.hpp"
 
 namespace wrapper {
 	WRAPPER_FUNC(GetScreenContext) {
@@ -405,6 +406,24 @@ namespace wrapper {
 
 		return Undefined();
 	}
+
+	WRAPPER_FUNC(DrawImage) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(9);
+
+		CHECK_ARGS_TYPE(!CHECK_OBJ_ARG(0) ||
+						!CHECK_RECT_ARG(1) ||
+						!CHECK_RECT_ARG(5));
+
+		GET_WRAPPED_OBJ_ARG(Image, img, 0);
+		GET_RECT_ARG(src, 1);
+		GET_RECT_ARG(dst, 5);
+
+		::DrawImage(img->img_, src.x, src.y, src.w, src.h, dst.x, dst.y, dst.w, dst.h);
+
+		return Undefined();
+	}
 }
 
 #define DEF_NGE_WRAPPER(sfunc)						\
@@ -492,4 +511,5 @@ void InitForNgeGraphics(Handle<Object> target) {
 	DEF_NGE_WRAPPER(DrawPolygon);
 	DEF_NGE_WRAPPER(FillPolygon);
 	DEF_NGE_WRAPPER(FillPolygonGrad);
+	DEF_NGE_WRAPPER(DrawImage);
 }

@@ -6,8 +6,8 @@
  *  Copyright  2012  Kun Wang <ifreedom.cn@gmail.com>
  *
  */
-#include "input.hpp"
 #include "common.h"
+#include "input.hpp"
 
 namespace wrapper {
 

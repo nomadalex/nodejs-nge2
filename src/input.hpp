@@ -10,13 +10,6 @@
 #ifndef _INPUT_HPP
 #define _INPUT_HPP
 
-#include <v8.h>
-#include <node.h>
-#include "libnge2.h"
-
-using namespace node;
-using namespace v8;
-
 void InitForNgeInput(Handle<Object> target);
 
 #endif /* _INPUT_HPP */

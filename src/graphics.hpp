@@ -10,13 +10,6 @@
 #ifndef _GRAPHICS_HPP
 #define _GRAPHICS_HPP
 
-#include <v8.h>
-#include <node.h>
-#include "libnge2.h"
-
-using namespace node;
-using namespace v8;
-
 void InitForNgeGraphics(Handle<Object> target);
 
 #endif /* _GRAPHICS_HPP */

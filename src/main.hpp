@@ -10,13 +10,6 @@
 #ifndef _MAIN_HPP
 #define _MAIN_HPP
 
-#include <v8.h>
-#include <node.h>
-#include "libnge2.h"
-
-using namespace node;
-using namespace v8;
-
 void InitForNgeMain(Handle<Object> target);
 
 #endif /* _MAIN_HPP */

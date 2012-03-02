@@ -10,6 +10,13 @@
 #ifndef _COMMON_H
 #define _COMMON_H
 
+#include <v8.h>
+#include <node.h>
+#include "libnge2.h"
+
+using namespace node;
+using namespace v8;
+
 namespace wrapper {
 	struct Rect2 {
 		float x, y, w, h;
@@ -57,6 +64,9 @@ namespace wrapper {
 #define CHECK_FLOAT_ARG(pos)					\
 	CHECK_ARG_TYPE(pos, Number)
 
+#define CHECK_OBJ_ARG(pos)						\
+	CHECK_ARG_TYPE(pos, Object)
+
 #define CHECK_ARRAY_ARG(pos)					\
 	CHECK_ARG_TYPE(pos, Array)
 
@@ -87,6 +97,13 @@ namespace wrapper {
 
 #define GET_FLOAT_ARG(var, pos)					\
 	float var = (float)args[pos]->ToNumber()->Value()
+
+#define GET_OBJ_ARG(var, pos)					\
+	Handle<Object> var = args[pos]->ToObject()
+
+#define GET_WRAPPED_OBJ_ARG(type, var, pos)			\
+	Handle<Object> var##__ = args[pos]->ToObject();	\
+	type* var = type::Unwrap<type>(var##__)
 
 #define GET_ARRAY_ARG(native_type, value_expr, var, pos)			\
 	native_type * var = NULL;										\

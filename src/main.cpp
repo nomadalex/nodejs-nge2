@@ -6,8 +6,8 @@
  *  Copyright  2012  Kun Wang <ifreedom.cn@gmail.com>
  *
  */
-#include "main.hpp"
 #include "common.h"
+#include "main.hpp"
 
 namespace wrapper {
 	WRAPPER_FUNC(NGE_Init) {
