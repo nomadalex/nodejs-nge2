@@ -11,6 +11,7 @@
 
 namespace wrapper {
 	Persistent<Function> Image::constructor;
+	Persistent<String> Image::constructor_name;
 
 	void Image::Init(Handle<Object> target) {
 		Local<String> name = String::NewSymbol("ImageHandle");
@@ -22,6 +23,7 @@ namespace wrapper {
 
 		target->Set(name, t->GetFunction());
 		constructor = Persistent<Function>::New(t->GetFunction());
+		constructor_name = Persistent<String>::New(name);
 	}
 
 	Handle<Value> Image::New(const Arguments& args) {

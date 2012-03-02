@@ -24,6 +24,10 @@ namespace wrapper {
 		static void Init(Handle<Object> target);
 		static Handle<Value> NewInstance();
 
+		inline static bool Check(Handle<Value> obj) {
+			return constructor_name->Equals(obj->ToObject()->GetConstructorName());
+		}
+
 		void retain() {
 			Ref();
 		}
@@ -37,6 +41,7 @@ namespace wrapper {
 		static Handle<Value> New(const Arguments& args);
 
 		static Persistent<Function> constructor;
+		static Persistent<String> constructor_name;
 	};
 }
 
