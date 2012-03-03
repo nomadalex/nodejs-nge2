@@ -44,6 +44,8 @@ namespace wrapper {
 			Unref();
 		}
 
+		void updateProp();
+
 		image_p img_;
 
 	protected:
