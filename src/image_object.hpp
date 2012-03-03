@@ -11,9 +11,9 @@
 #define _IMAGE_OBJECT_HPP
 
 namespace wrapper {
-	class Image : public ObjectWrap {
+	class Image : public HandleWrap<Image> {
 	public:
-		Image() : ObjectWrap() {
+		Image() : HandleWrap<Image>() {
 			img_ = NULL;
 			V8::AdjustAmountOfExternalAllocatedMemory(getExternalAllocatedSize());
 		}
@@ -23,11 +23,8 @@ namespace wrapper {
 				::image_free(img_);
 		}
 
-		static void Init(Handle<Object> target);
-		static Handle<Value> NewInstance();
-
-		inline static bool HasInstance(Handle<Value> obj) {
-			return constructor_template->HasInstance(obj);
+		inline static void Init(Handle<Object> target) {
+			HandleWrap<Image>::Init("ImageHandle", target);
 		}
 
 		int getExternalAllocatedSize() {
@@ -37,21 +34,9 @@ namespace wrapper {
 			return sizeof(Image);
 		}
 
-		void retain() {
-			Ref();
-		}
-		void release() {
-			Unref();
-		}
-
 		void updateProp();
 
 		image_p img_;
-
-	protected:
-		static Handle<Value> New(const Arguments& args);
-
-		static Persistent<FunctionTemplate> constructor_template;
 	};
 }
 

@@ -36,6 +36,57 @@ namespace wrapper {
 	private:
 		T * obj_;
 	};
+
+	template <class T>
+		class HandleWrap : public ObjectWrap {
+	public:
+	HandleWrap() : ObjectWrap() {}
+
+		static Handle<Value> NewInstance() {
+			HandleScope scope;
+
+			Local<Object> obj = constructor_template->GetFunction()->NewInstance(0, NULL);
+
+			return scope.Close(obj);
+		}
+
+		inline static bool HasInstance(Handle<Value> obj) {
+			return constructor_template->HasInstance(obj);
+		}
+
+		void retain() {
+			Ref();
+		}
+
+		void release() {
+			Unref();
+		}
+
+	protected:
+		inline static void Init(const char* ctor_name, Handle<Object> target) {
+			Local<String> name = String::NewSymbol(ctor_name);
+
+			Local<FunctionTemplate> t = FunctionTemplate::New(New);
+
+			t->InstanceTemplate()->SetInternalFieldCount(1);
+			t->SetClassName(name);
+
+			target->Set(name, t->GetFunction());
+			constructor_template = Persistent<FunctionTemplate>::New(t);
+		}
+
+		static Persistent<FunctionTemplate> constructor_template;
+
+	private:
+		static Handle<Value> New(const Arguments& args) {
+			HandleScope scope;
+
+			T* o = new T();
+
+			o->Wrap(args.This());
+			return scope.Close(args.This());
+		}
+	};
 }
 
 #define WRAPPER_FUNC(name)						\
