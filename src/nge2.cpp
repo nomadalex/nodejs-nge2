@@ -13,6 +13,7 @@
 #include "image.hpp"
 #include "graphics.hpp"
 #include "NgeApp.hpp"
+#include "audio.hpp"
 
 extern "C" {
 	void init (Handle<Object> target) {
@@ -23,6 +24,7 @@ extern "C" {
 		InitForNgeInput(target);
 		InitForNgeImage(target);
 		InitForNgeGraphics(target);
+		InitForNgeAudio(target);
 	}
 
 	NODE_MODULE(node_nge2, init);
