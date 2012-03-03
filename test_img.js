@@ -9,8 +9,8 @@ var quit
   , blue = nge2.CreateColor(0, 255, 255, 255, dtype);
 
 var img, bg, logo
-  , logomask1 = nge2.CreateColor(255,255,255,128, nge2.DISPLAY_PIXEL_FORMAT_4444)
-  , logomask2 = nge2.CreateColor(100,100,100,255, nge2.DISPLAY_PIXEL_FORMAT_4444);
+  , logomask1
+  , logomask2;
 
 app.init = function(end){
   nge2.Init(nge2.INIT_VIDEO);
@@ -32,6 +32,9 @@ app.init = function(end){
   logo = nge2.image_load("images/nge2logo.png", nge2.DISPLAY_PIXEL_FORMAT_4444, 1);
   if (!logo)
     console.log("can not find nge2logo.png!");
+  console.log(logo);
+  logomask1 = nge2.CreateColor(255,255,255,128, logo.dtype);
+  logomask2 = nge2.CreateColor(100,100,100,255, logo.dtype);;
 
   end();
 }
