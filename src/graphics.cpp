@@ -407,12 +407,38 @@ namespace wrapper {
 		return Undefined();
 	}
 
+	WRAPPER_FUNC(RenderQuad) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(11);
+
+		CHECK_ARGS_TYPE(!CHECK_IMG_ARG(0) ||
+						!CHECK_RECT_ARG(1) ||
+						!CHECK_POINT_ARG(5) ||
+						!CHECK_FLOAT_ARG(7) ||
+						!CHECK_FLOAT_ARG(8) ||
+						!CHECK_FLOAT_ARG(9) ||
+						!CHECK_INT_ARG(10));
+
+		GET_IMG_ARG(img, 0);
+		GET_RECT_ARG(s, 1);
+		GET_POINT_ARG(d, 5);
+		GET_FLOAT_ARG(xscale, 7);
+		GET_FLOAT_ARG(yscale, 8);
+		GET_FLOAT_ARG(angle, 9);
+		GET_INT_ARG(mask, 10);
+
+		::RenderQuad(img->img_, s.x, s.y, s.w, s.h, d.x, d.y, xscale, yscale, angle, mask);
+
+		return Undefined();
+	}
+
 	WRAPPER_FUNC(DrawImage) {
 		HandleScope scope;
 
 		CHECK_ARG_LEN(9);
 
-		CHECK_ARGS_TYPE(!CHECK_WRAPPED_OBJ_ARG(Image, 0) ||
+		CHECK_ARGS_TYPE(!CHECK_IMG_ARG(0) ||
 						!CHECK_RECT_ARG(1) ||
 						!CHECK_RECT_ARG(5));
 
@@ -421,6 +447,179 @@ namespace wrapper {
 		GET_RECT_ARG(dst, 5);
 
 		::DrawImage(img->img_, src.x, src.y, src.w, src.h, dst.x, dst.y, dst.w, dst.h);
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(DrawImageMask) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(10);
+
+		CHECK_ARGS_TYPE(!CHECK_IMG_ARG(0) ||
+						!CHECK_RECT_ARG(1) ||
+						!CHECK_RECT_ARG(5) ||
+						!CHECK_INT_ARG(9));
+
+		GET_IMG_ARG(img, 0);
+		GET_RECT_ARG(src, 1);
+		GET_RECT_ARG(dst, 5);
+		GET_INT_ARG(mask, 9);
+
+		::DrawImageMask(img->img_, src.x, src.y, src.w, src.h, dst.x, dst.y, dst.w, dst.h, mask);
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(ImageToScreen) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(3);
+
+		CHECK_ARGS_TYPE(!CHECK_IMG_ARG(0) ||
+						!CHECK_POINT_ARG(1));
+
+		GET_IMG_ARG(img, 0);
+		GET_POINT_ARG(d, 1);
+
+		::ImageToScreen(img->img_, d.x, d.y);
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(RenderQuadTrans) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(12);
+
+		CHECK_ARGS_TYPE(!CHECK_IMG_ARG(0) ||
+						!CHECK_RECT_ARG(1) ||
+						!CHECK_POINT_ARG(5) ||
+						!CHECK_FLOAT_ARG(7) ||
+						!CHECK_FLOAT_ARG(8) ||
+						!CHECK_FLOAT_ARG(9) ||
+						!CHECK_INT_ARG(10) ||
+						!CHECK_INT_ARG(11));
+
+		GET_IMG_ARG(img, 0);
+		GET_RECT_ARG(s, 1);
+		GET_POINT_ARG(d, 5);
+		GET_FLOAT_ARG(xscale, 7);
+		GET_FLOAT_ARG(yscale, 8);
+		GET_FLOAT_ARG(angle, 9);
+		GET_INT_ARG(mask, 10);
+		GET_INT_ARG(trans, 11);
+
+		::RenderQuadTrans(img->img_, s.x, s.y, s.w, s.h, d.x, d.y, xscale, yscale, angle, mask, trans);
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(DrawImageTrans) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(10);
+
+		CHECK_ARGS_TYPE(!CHECK_IMG_ARG(0) ||
+						!CHECK_RECT_ARG(1) ||
+						!CHECK_RECT_ARG(5) ||
+						!CHECK_INT_ARG(9));
+
+		GET_WRAPPED_OBJ_ARG(Image, img, 0);
+		GET_RECT_ARG(src, 1);
+		GET_RECT_ARG(dst, 5);
+		GET_INT_ARG(trans, 9);
+
+		::DrawImageTrans(img->img_, src.x, src.y, src.w, src.h, dst.x, dst.y, dst.w, dst.h, trans);
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(DrawImageMaskTrans) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(11);
+
+		CHECK_ARGS_TYPE(!CHECK_IMG_ARG(0) ||
+						!CHECK_RECT_ARG(1) ||
+						!CHECK_RECT_ARG(5) ||
+						!CHECK_INT_ARG(9) ||
+						!CHECK_INT_ARG(10));
+
+		GET_IMG_ARG(img, 0);
+		GET_RECT_ARG(src, 1);
+		GET_RECT_ARG(dst, 5);
+		GET_INT_ARG(mask, 9);
+		GET_INT_ARG(trans, 10);
+
+		::DrawImageMaskTrans(img->img_, src.x, src.y, src.w, src.h, dst.x, dst.y, dst.w, dst.h, mask, trans);
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(ImageToScreenTrans) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(4);
+
+		CHECK_ARGS_TYPE(!CHECK_IMG_ARG(0) ||
+						!CHECK_POINT_ARG(1) ||
+						!CHECK_INT_ARG(3));
+
+		GET_IMG_ARG(img, 0);
+		GET_POINT_ARG(d, 1);
+		GET_INT_ARG(trans, 3);
+
+		::ImageToScreenTrans(img->img_, d.x, d.y, trans);
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(ScreenToImage) {
+		HandleScope scope;
+
+		CREATE_IMG(img);
+
+		ExternalMemoryAutoUpdate<Image> update(img);
+		img->img_ = ::ScreenToImage();
+
+		CHECK_IMG_AND_RETURN(img);
+	}
+
+	WRAPPER_FUNC(ScreenShot) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(1);
+
+		CHECK_ARGS_TYPE(!CHECK_STR_ARG(0));
+
+		GET_STR_ARG(filename, 0);
+
+		::ScreenShot(*filename);
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(SetTexBlend) {
+		HandleScope scope;
+
+		CHECK_ARG_LEN(2);
+
+		CHECK_ARGS_TYPE(!CHECK_INT_ARG(0) ||
+						!CHECK_INT_ARG(1));
+
+		GET_INT_ARG(src_blend, 0);
+		GET_INT_ARG(dst_blend, 0);
+
+		::SetTexBlend(src_blend, dst_blend);
+
+		return Undefined();
+	}
+
+	WRAPPER_FUNC(ResetTexBlend) {
+		HandleScope scope;
+
+		::ResetTexBlend();
 
 		return Undefined();
 	}
@@ -485,6 +684,23 @@ void InitForNgeGraphics(Handle<Object> target) {
 	DEF_NGE_COLOR_2(FONT_FG);
 	DEF_NGE_COLOR_2(FONT_SH);
 
+	NODE_DEFINE_CONSTANT(target, NGE_TRANS_NONE);
+	NODE_DEFINE_CONSTANT(target, NGE_TRANS_V);
+	NODE_DEFINE_CONSTANT(target, NGE_TRANS_H);
+	NODE_DEFINE_CONSTANT(target, NGE_TRANS_HV);
+
+	NODE_DEFINE_CONSTANT(target, BLEND_ZERO);
+	NODE_DEFINE_CONSTANT(target, BLEND_ONE);
+	NODE_DEFINE_CONSTANT(target, BLEND_SRC_COLOR);
+	NODE_DEFINE_CONSTANT(target, BLEND_ONE_MINUS_SRC_COLOR);
+	NODE_DEFINE_CONSTANT(target, BLEND_SRC_ALPHA);
+	NODE_DEFINE_CONSTANT(target, BLEND_ONE_MINUS_SRC_ALPHA);
+	NODE_DEFINE_CONSTANT(target, BLEND_DST_ALPHA);
+	NODE_DEFINE_CONSTANT(target, BLEND_ONE_MINUS_DST_ALPHA);
+	NODE_DEFINE_CONSTANT(target, BLEND_DST_COLOR);
+	NODE_DEFINE_CONSTANT(target, BLEND_ONE_MINUS_DST_COLOR);
+	NODE_DEFINE_CONSTANT(target, BLEND_SRC_ALPHA_SATURATE);
+
 	DEF_NGE_WRAPPER(GetScreenContext);
 	DEF_NGE_WRAPPER(InitGrahics);
 	DEF_NGE_WRAPPER(FiniGrahics);
@@ -497,12 +713,27 @@ void InitForNgeGraphics(Handle<Object> target) {
 	DEF_NGE_WRAPPER(SetClip);
 	DEF_NGE_WRAPPER(ResetClip);
 
-	DEF_NGE_WRAPPER(SetScreenColor);
 	DEF_NGE_WRAPPER(CreateColor);
 	DEF_NGE_WRAPPER(DrawLine);
 	DEF_NGE_WRAPPER(DrawRect);
 	DEF_NGE_WRAPPER(FillRect);
 	DEF_NGE_WRAPPER(FillRectGrad);
+
+	DEF_NGE_WRAPPER(RenderQuad);
+	DEF_NGE_WRAPPER(DrawImage);
+	DEF_NGE_WRAPPER(DrawImageMask);
+	DEF_NGE_WRAPPER(ImageToScreen);
+	DEF_NGE_WRAPPER(RenderQuadTrans);
+	DEF_NGE_WRAPPER(DrawImageTrans);
+	DEF_NGE_WRAPPER(DrawImageMaskTrans);
+	DEF_NGE_WRAPPER(ImageToScreenTrans);
+	DEF_NGE_WRAPPER(ScreenToImage);
+	DEF_NGE_WRAPPER(ScreenShot);
+
+	DEF_NGE_WRAPPER(SetScreenColor);
+	DEF_NGE_WRAPPER(SetTexBlend);
+	DEF_NGE_WRAPPER(ResetTexBlend);
+
 	DEF_NGE_WRAPPER(PutPix);
 	DEF_NGE_WRAPPER(DrawCircle);
 	DEF_NGE_WRAPPER(FillCircle);
@@ -511,5 +742,4 @@ void InitForNgeGraphics(Handle<Object> target) {
 	DEF_NGE_WRAPPER(DrawPolygon);
 	DEF_NGE_WRAPPER(FillPolygon);
 	DEF_NGE_WRAPPER(FillPolygonGrad);
-	DEF_NGE_WRAPPER(DrawImage);
 }
