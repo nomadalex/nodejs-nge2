@@ -31,11 +31,11 @@ app.init = function(end){
 
   nge2.SetScreenColor(255,255,255,255);
 
-  bg = nge2.image_load("images/demo0.jpg", dtype, 1);
+  bg = nge2.image_load("res/images/demo0.jpg", dtype, 1);
   if (!bg)
     console.log("can not find demo0.jpg!");
 
-  logo = nge2.image_load("images/nge2logo.png", nge2.DISPLAY_PIXEL_FORMAT_4444, 1);
+  logo = nge2.image_load("res/images/nge2logo.png", nge2.DISPLAY_PIXEL_FORMAT_4444, 1);
   if (!logo)
     console.log("can not find nge2logo.png!");
 
@@ -44,13 +44,13 @@ app.init = function(end){
 
   audios[0] = nge2.CreateMp3Player();
   console.log(audios[0]);
-  nge2.audioLoad(audios[0], "music/simple1.mp3");
+  nge2.audioLoad(audios[0], "res/music/simple1.mp3");
 
   audios[1] = nge2.CreateWavPlayer();
-  nge2.audioLoad(audios[1], "music/simple3.wav");
+  nge2.audioLoad(audios[1], "res/music/simple3.wav");
 
   audios[2] = nge2.CreateOggPlayer();
-  nge2.audioLoad(audios[2], "music/test.ogg");
+  nge2.audioLoad(audios[2], "res/music/test.ogg");
 
   nge2.audioPlay(audios[0], 1, 0);
 

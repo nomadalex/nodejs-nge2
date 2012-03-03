@@ -25,11 +25,11 @@ app.init = function(end){
   nge2.SetScreenColor(255,255,255,255);
 
   img = nge2.image_create_ex(10, 10, red, dtype);
-  bg = nge2.image_load("images/demo0.jpg", dtype, 1);
+  bg = nge2.image_load("res/images/demo0.jpg", dtype, 1);
   if (!bg)
     console.log("can not find demo0.jpg!");
 
-  logo = nge2.image_load("images/nge2logo.png", nge2.DISPLAY_PIXEL_FORMAT_4444, 1);
+  logo = nge2.image_load("res/images/nge2logo.png", nge2.DISPLAY_PIXEL_FORMAT_4444, 1);
   if (!logo)
     console.log("can not find nge2logo.png!");
   console.log(logo);
