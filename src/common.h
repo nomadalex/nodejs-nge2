@@ -178,6 +178,9 @@ namespace wrapper {
 #define OBJECT_SET_INT_PROP(obj, name, value)		\
 	OBJECT_SET_PROP(obj, name, Integer::New(value))
 
+#define OBJECT_SET_UINT_PROP(obj, name, value)		\
+	OBJECT_SET_PROP(obj, name, Integer::NewFromUnsigned(value))
+
 #define OBJECT_SET_FLOAT_PROP(obj, name, value)		\
 	OBJECT_SET_PROP(obj, name, Number::New(value))
 
