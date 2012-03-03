@@ -21,6 +21,21 @@ namespace wrapper {
 	struct Rect2 {
 		float x, y, w, h;
 	};
+
+	template <class T>
+		class ExternalMemoryAutoUpdate {
+	public:
+		ExternalMemoryAutoUpdate(T* obj) {
+			V8::AdjustAmountOfExternalAllocatedMemory(-obj->getExternalAllocatedSize());
+			obj_ = obj;
+		}
+		~ExternalMemoryAutoUpdate() {
+			V8::AdjustAmountOfExternalAllocatedMemory(obj_->getExternalAllocatedSize());
+		}
+
+	private:
+		T * obj_;
+	};
 }
 
 #define WRAPPER_FUNC(name)						\
@@ -68,7 +83,7 @@ namespace wrapper {
 	CHECK_ARG_TYPE(pos, Object)
 
 #define CHECK_WRAPPED_OBJ_ARG(type, pos)					\
-	(CHECK_ARG_TYPE(pos, Object) && type::Check(args[pos]))
+	(CHECK_ARG_TYPE(pos, Object) && type::HasInstance(args[pos]))
 
 #define CHECK_ARRAY_ARG(pos)					\
 	CHECK_ARG_TYPE(pos, Array)

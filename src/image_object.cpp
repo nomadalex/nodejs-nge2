@@ -10,8 +10,7 @@
 #include "image_object.hpp"
 
 namespace wrapper {
-	Persistent<Function> Image::constructor;
-	Persistent<String> Image::constructor_name;
+	Persistent<FunctionTemplate> Image::constructor_template;
 
 	void Image::Init(Handle<Object> target) {
 		Local<String> name = String::NewSymbol("ImageHandle");
@@ -22,8 +21,7 @@ namespace wrapper {
 		t->SetClassName(name);
 
 		target->Set(name, t->GetFunction());
-		constructor = Persistent<Function>::New(t->GetFunction());
-		constructor_name = Persistent<String>::New(name);
+		constructor_template = Persistent<FunctionTemplate>::New(t);
 	}
 
 	Handle<Value> Image::New(const Arguments& args) {
@@ -38,7 +36,7 @@ namespace wrapper {
 	Handle<Value> Image::NewInstance() {
 		HandleScope scope;
 
-		Local<Object> obj = constructor->NewInstance(0, NULL);
+		Local<Object> obj = constructor_template->GetFunction()->NewInstance(0, NULL);
 
 		return scope.Close(obj);
 	}
