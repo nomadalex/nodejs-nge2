@@ -29,6 +29,7 @@ namespace wrapper {
 
 		ExternalMemoryAutoUpdate<Image> update(img);
 		img->img_ = ::image_create(w, h, dtype);
+		img->updateProp();
 
 		CHECK_IMG_AND_RETURN(img);
 	}
@@ -50,6 +51,7 @@ namespace wrapper {
 
 		ExternalMemoryAutoUpdate<Image> update(img);
 		img->img_ = ::image_create_ex(w, h, color, dtype);
+		img->updateProp();
 
 		CHECK_IMG_AND_RETURN(img);
 	}
@@ -71,6 +73,7 @@ namespace wrapper {
 
 		ExternalMemoryAutoUpdate<Image> update(img);
 		img->img_ = ::image_load(*filename, dtype, swizzle);
+		img->updateProp();
 
 		CHECK_IMG_AND_RETURN(img);
 	}
@@ -94,6 +97,7 @@ namespace wrapper {
 
 		ExternalMemoryAutoUpdate<Image> update(img);
 		img->img_ = ::image_load_colorkey(*filename, dtype, colorkey, swizzle);
+		img->updateProp();
 
 		CHECK_IMG_AND_RETURN(img);
 	}
@@ -130,6 +134,7 @@ namespace wrapper {
 		ExternalMemoryAutoUpdate<Image> update(img);
 		::image_free(img->img_);
 		img->img_ = NULL;
+		img->updateProp();
 
 		return Undefined();
 	}
@@ -147,6 +152,7 @@ namespace wrapper {
 
 		ExternalMemoryAutoUpdate<Image> update(img);
 		img->img_ = ::image_clone(img2->img_);
+		img->updateProp();
 
 		CHECK_IMG_AND_RETURN(img);
 	}
