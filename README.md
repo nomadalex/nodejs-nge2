@@ -32,10 +32,12 @@ libnge2的nodejs绑定。
 
 使用cmake作为编译系统，如不会使用cmake，请先自行学习其使用方法。
 
+已编译好的WIN32包可在[ge.tt](http://ge.tt/8rT8cKE)下载。（nodejs-nge2-xxxxxxx.7z，xxxxxx即为相应git commit的哈希码）
+
 nodejs
 ------
 
-因编译扩展需要nodejs，所以为了方便大家使用，特地编译了一份带有头文件和库文件的nodejs版本，在windows上可以直接使用此版本，[nodejs.7z](https://open.ge.tt/1/files/1AwzUME/0/blob)。
+因编译扩展需要nodejs，所以为了方便大家使用，特地编译了一份带有头文件和库文件的nodejs版本，在windows上可以直接使用此版本，[nodejs.7z](http://ge.tt/1AwzUME)。
 
 目前nodejs的社区对于windows上的扩展构建并不是十分重视，我个人因习惯使用cmake作为构建系统，自己写了一份用于构建nodejs扩展的cmake文件，[nodejs.cmake](https://github.com/ifreedom/nodejs-nge2/blob/master/CMake/Nodejs.cmake)，且同时支持我提供的nodejs二进制版本和官方的源码版本。
 
@@ -52,7 +54,7 @@ nodejs
 
 你可以直接下载打包好的依赖包：
 
-* [Win32Depends.7z](https://open.ge.tt/1/files/8rT8cKE/0/blob)
+* [Win32Depends.7z](http://ge.tt/8rT8cKE)
 
 解压到项目根目录或自行准备以下依赖：
 
