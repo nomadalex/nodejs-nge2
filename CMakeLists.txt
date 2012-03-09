@@ -53,6 +53,8 @@ list(APPEND NODEJS_NGE2_SRCS
   src/main.cpp
   src/audio_object.cpp
   src/audio.cpp
+  src/font_object.cpp
+  src/font.cpp
   )
 list(APPEND NODEJS_NGE2_LIBS ${NODEJS_NGE2_DEP_LIBS})
 
