@@ -10,6 +10,7 @@ fi
 mkdir $dir
 cp -r res $dir
 cp Win32Depends/bin/*.dll $dir
+rm -f $dir/nge2_d.dll
 cp *.js $dir
 
 mkdir -p $dir/build/Release
