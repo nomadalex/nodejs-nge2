@@ -5,7 +5,13 @@ libnge2的nodejs绑定。
 
 **正在重度编写中**
 
-目前已经完成基本图元的绘制和（键盘、鼠标）输入部分。
+目前已经完成：
+
+* 基本图元的绘制，
+* （键盘、鼠标）输入部分，
+* 图片的载入与绘制，
+* 声音的载入与播放控制，
+* 字体的载入与绘制。
 
 基本绘画
 
@@ -14,6 +20,10 @@ libnge2的nodejs绑定。
 显示图片
 
 ![例子2](https://github.com/ifreedom/nodejs-nge2/raw/master/img/test_img.png)
+
+显示字体(点阵式和truetype皆可)
+
+![例子3](https://github.com/ifreedom/nodejs-nge2/raw/master/img/test_font.png)
 
 具体计划请查看 [TODO](https://github.com/ifreedom/nodejs-nge2/blob/master/TODO.md)。
 
