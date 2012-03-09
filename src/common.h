@@ -158,6 +158,10 @@ namespace wrapper {
 	Local<String> var##___ = args[pos]->ToString();	\
 	String::AsciiValue var(var##___)
 
+#define GET_U8STR_ARG(var, pos)						\
+	Local<String> var##___ = args[pos]->ToString();	\
+	String::Utf8Value var(var##___)
+
 #define GET_UINT_ARG(var, pos)					\
 	int var = args[pos]->Uint32Value()
 
