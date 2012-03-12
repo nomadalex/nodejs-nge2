@@ -242,6 +242,12 @@ namespace wrapper {
 #define COPY_PROP(obj, type, st, name)				\
 	OBJECT_SET_##type##_PROP(obj, #name, st->name)
 
+#define CHECK_FUNC_ARG(pos)						\
+	CHECK_ARG_TYPE(pos, Function)
+
+#define GET_FUNC_ARG(var, pos)								\
+	Local<Function> var = Local<Function>::Cast(args[pos])
+
 #ifdef __cplusplus
 extern "C" {
 #endif
