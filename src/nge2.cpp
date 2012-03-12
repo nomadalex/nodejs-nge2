@@ -11,6 +11,7 @@
 #include "main.hpp"
 #include "input.hpp"
 #include "image.hpp"
+#include "image_async.hpp"
 #include "graphics.hpp"
 #include "NgeApp.hpp"
 #include "audio.hpp"
@@ -24,6 +25,7 @@ extern "C" {
 		InitForNgeMain(target);
 		InitForNgeInput(target);
 		InitForNgeImage(target);
+		InitForNgeImageAsync(target);
 		InitForNgeGraphics(target);
 		InitForNgeAudio(target);
 		InitForNgeFont(target);
