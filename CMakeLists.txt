@@ -55,6 +55,7 @@ list(APPEND NODEJS_NGE2_SRCS
   src/audio.cpp
   src/font_object.cpp
   src/font.cpp
+  src/image_async.cpp
   )
 list(APPEND NODEJS_NGE2_LIBS ${NODEJS_NGE2_DEP_LIBS})
 
