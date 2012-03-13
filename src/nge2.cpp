@@ -15,6 +15,7 @@
 #include "graphics.hpp"
 #include "NgeApp.hpp"
 #include "audio.hpp"
+#include "audio_async.hpp"
 #include "font.hpp"
 
 extern "C" {
@@ -28,6 +29,7 @@ extern "C" {
 		InitForNgeImageAsync(target);
 		InitForNgeGraphics(target);
 		InitForNgeAudio(target);
+		InitForNgeAudioAsync(target);
 		InitForNgeFont(target);
 	}
 
