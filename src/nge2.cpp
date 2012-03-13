@@ -17,6 +17,7 @@
 #include "audio.hpp"
 #include "audio_async.hpp"
 #include "font.hpp"
+#include "font_async.hpp"
 
 extern "C" {
 	void init (Handle<Object> target) {
@@ -31,6 +32,7 @@ extern "C" {
 		InitForNgeAudio(target);
 		InitForNgeAudioAsync(target);
 		InitForNgeFont(target);
+		InitForNgeFontAsync(target);
 	}
 
 	NODE_MODULE(node_nge2, init);
