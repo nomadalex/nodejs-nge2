@@ -53,6 +53,13 @@
 	int status___ = uv_queue_work(uv_default_loop(), &data->request, async::func, async::func##After); \
 	assert(status___ == 0)
 
+#define DO_ASYNC_CALLBACK(data, argc, argv)								\
+	TryCatch try_catch;													\
+	data->callback->Call(Context::GetCurrent()->Global(), argc, argv);	\
+	if (try_catch.HasCaught()) {										\
+		node::FatalException(try_catch);								\
+	}																	\
+	data->callback.Dispose()
 
 #ifdef __cplusplus
 extern "C" {
