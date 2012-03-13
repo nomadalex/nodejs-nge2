@@ -55,7 +55,7 @@ app.init = function(end){
   nge2.audioPlay(audios[0], 1, 0);
 
   console.log("mp3 comes mix with ogg ~\n");
-  nge2.audioPlaystop(audios[2]);
+  nge2.audioPlay(audios[2], 1, 0);
 
   console.log("wav comes mix all~ \n");
   nge2.audioPlay(audios[1], 1, 0);
