@@ -60,13 +60,7 @@ namespace wrapper {
 			delete args;
 			data->audio->release();
 
-			TryCatch try_catch;
-			data->callback->Call(Context::GetCurrent()->Global(), argc, argv);
-			if (try_catch.HasCaught()) {
-				node::FatalException(try_catch);
-			}
-
-			data->callback.Dispose();
+			DO_ASYNC_CALLBACK(data, argc, argv);
 			delete data;
 		}
 	}
