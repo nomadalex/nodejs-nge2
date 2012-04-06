@@ -10,5 +10,6 @@
 #include "audio_object.hpp"
 
 namespace wrapper {
-	Persistent<FunctionTemplate> Audio::constructor_template;
+	template<>
+	Persistent<FunctionTemplate> HandleWrap<Audio>::constructor_template;
 }

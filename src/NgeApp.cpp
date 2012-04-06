@@ -8,6 +8,7 @@
  */
 
 #include "NgeApp.hpp"
+#include <cstdlib>
 
 class NgeAppImpl : public CNgeApp {
 public:

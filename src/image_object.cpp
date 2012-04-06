@@ -10,7 +10,8 @@
 #include "image_object.hpp"
 
 namespace wrapper {
-	Persistent<FunctionTemplate> Image::constructor_template;
+	template<>
+	Persistent<FunctionTemplate> HandleWrap<Image>::constructor_template;
 
 	void Image::updateProp() {
 		if (img_) {

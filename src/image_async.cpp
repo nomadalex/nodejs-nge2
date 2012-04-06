@@ -10,6 +10,7 @@
 #include "async_common.h"
 #include "image.hpp"
 #include "image_object.hpp"
+#include <cstring>
 
 #define GET_IMAGE_ASYNC_DATA(var)				\
 	GET_ASYNC_DATA(wrapper::ImageAsyncData, var)

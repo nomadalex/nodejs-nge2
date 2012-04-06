@@ -11,6 +11,7 @@
 #include "async_common.h"
 #include "font_async.hpp"
 #include "font_object.hpp"
+#include <cstring>
 
 #define GET_FONT_ASYNC_DATA(var)					\
 	GET_ASYNC_DATA(wrapper::FontAsyncData, var)

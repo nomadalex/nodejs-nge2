@@ -51,7 +51,7 @@
 
 #define PUT_UV_QUEUE(data, func)										\
 	int status___ = uv_queue_work(uv_default_loop(), &data->request, async::func, async::func##After); \
-	assert(status___ == 0)
+	assert(status___ == 0); (void)status___
 
 #define DO_ASYNC_CALLBACK(data, argc, argv)								\
 	TryCatch try_catch;													\

@@ -11,6 +11,7 @@
 #include "async_common.h"
 #include "audio_async.hpp"
 #include "audio_object.hpp"
+#include <cstring>
 
 #define GET_AUDIO_ASYNC_DATA(var)					\
 	GET_ASYNC_DATA(wrapper::AudioAsyncData, var)
