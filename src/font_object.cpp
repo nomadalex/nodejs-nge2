@@ -10,7 +10,5 @@
 #include "font_object.hpp"
 
 namespace wrapper {
-	template<>
-	Persistent<FunctionTemplate> HandleWrap<Font>::constructor_template;
 }
 

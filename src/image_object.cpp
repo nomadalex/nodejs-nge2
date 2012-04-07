@@ -10,9 +10,6 @@
 #include "image_object.hpp"
 
 namespace wrapper {
-	template<>
-	Persistent<FunctionTemplate> HandleWrap<Image>::constructor_template;
-
 	void Image::updateProp() {
 		if (img_) {
 			OBJECT_SET_PROP(handle_, "isVaild", Boolean::New(true));

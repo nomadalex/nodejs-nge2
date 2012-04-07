@@ -87,6 +87,9 @@ namespace wrapper {
 			return scope.Close(args.This());
 		}
 	};
+
+	template<class T>
+		Persistent<FunctionTemplate> HandleWrap<T>::constructor_template;
 }
 
 #define WRAPPER_FUNC(name)						\
