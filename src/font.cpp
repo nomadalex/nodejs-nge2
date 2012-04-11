@@ -212,10 +212,10 @@ namespace wrapper {
 		CHECK_ARG_LEN(2);
 
 		CHECK_ARGS_TYPE(!CHECK_FONT_ARG(0) ||
-						!CHECK_UINT_ARG(1));
+						!CHECK_INT_ARG(1));
 
 		GET_FONT_ARG(pf, 0);
-		GET_UINT_ARG(color, 1);
+		GET_INT_ARG(color, 1);
 
 		int last = ::font_setcolor(pf->data, color);
 
@@ -228,14 +228,14 @@ namespace wrapper {
 		CHECK_ARG_LEN(4);
 
 		CHECK_ARGS_TYPE(!CHECK_FONT_ARG(0) ||
-						!CHECK_UINT_ARG(1) ||
-						!CHECK_UINT_ARG(2) ||
-						!CHECK_UINT_ARG(3));
+						!CHECK_INT_ARG(1)  ||
+						!CHECK_INT_ARG(2)  ||
+						!CHECK_INT_ARG(3));
 
 		GET_FONT_ARG(pf, 0);
-		GET_UINT_ARG(color_fg, 1);
-		GET_UINT_ARG(color_bg, 2);
-		GET_UINT_ARG(color_sh, 3);
+		GET_INT_ARG(color_fg, 1);
+		GET_INT_ARG(color_bg, 2);
+		GET_INT_ARG(color_sh, 3);
 
 		::font_setcolor_ex(pf->data, color_fg, color_bg, color_sh);
 
